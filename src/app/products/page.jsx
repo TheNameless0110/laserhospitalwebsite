@@ -288,10 +288,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                           </ul>
                         )}
 
-                        <div className="flex items-center mb-4">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="text-sm font-medium text-gray-600 ml-2">{product.rating} (120 reviews)</span>
-                        </div>
+
                       </div>
                       <div className="flex items-center justify-between mt-auto pt-4">
 
@@ -321,7 +318,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
 function ProductsPageContent() {
   const router = useRouter();
       const searchParams = useSearchParams();
-      const q = searchParams ? searchParams.get('q') : null;
+      const q = searchParams ? (searchParams.get('search') || searchParams.get('q')) : null;
 
       const [searchQuery, setSearchQuery] = useState(q || '');
       const [activeCat, setActiveCat] = useState('ALL PRODUCTS');

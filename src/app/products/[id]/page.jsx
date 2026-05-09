@@ -86,19 +86,12 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
               {selectedProduct.brand}
             </div>
             <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 leading-tight">{selectedProduct.name}</h1>
-            <div className="flex items-center space-x-6 mb-8">
-              <div className="flex items-center">
-                {[1,2,3,4,5].map(i => (
-                  <Star key={i} className={`w-6 h-6 ${i <= Math.floor(selectedProduct.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
-                ))}
-                <span className="ml-3 text-gray-600 font-medium">({selectedProduct.rating} / 5.0)</span>
-              </div>
+            <div className="flex items-center mb-8">
               <span className="text-green-600 font-bold bg-green-50 px-3 py-1 rounded-lg border border-green-200">✓ In Stock</span>
             </div>
             <p className="text-gray-600 text-xl leading-relaxed mb-10 font-light">
               {selectedProduct.description}
             </p>
-            
             
             <div className="flex space-x-4">
               <button 

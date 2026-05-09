@@ -110,7 +110,8 @@ const ContactPage = ({ setToast }) => {
             <h3 className="text-3xl font-black text-gray-900 mb-8">Get in Touch</h3>
             {[
               { title: 'Call Desk', detail: '+91 9437066882', sub: 'Mon-Sat, 9:30am - 9pm', icon: Phone },
-              { title: 'Email Support', detail: 'laserhospitalsupport@gmail.com', sub: 'Inquiries answered within 2 hrs', icon: Mail },
+              { title: 'Email Support', detail: 'laserhospitalsupport@gmail.com', sub: '', icon: Mail },
+              { title: 'Email Support', detail: 'laser.hospital@gmail.com', sub: '', icon: Mail },
             ].map((info, idx) => (
               <div key={idx} className="bg-white p-8 rounded-[2rem] shadow-md shadow-gray-200/50 border border-gray-100 flex items-start fade-in-up" style={{ animationDelay: `${idx * 150}ms` }}>
                 <div className="w-14 h-14 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0 mr-6">
@@ -119,7 +120,7 @@ const ContactPage = ({ setToast }) => {
                 <div className="flex-1 min-w-0">
                   <h4 className="font-bold text-gray-900 text-xl mb-1">{info.title}</h4>
                   <p className="text-gray-800 font-medium text-lg break-all">{info.detail}</p>
-                  <p className="text-gray-500 text-sm mt-1">{info.sub}</p>
+                  {info.sub && <p className="text-gray-500 text-sm mt-1">{info.sub}</p>}
                 </div>
               </div>
             ))}

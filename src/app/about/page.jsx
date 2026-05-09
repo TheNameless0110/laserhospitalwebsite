@@ -76,10 +76,10 @@ const AboutPage = () => (
              
              {[
                { year: '1997', title: 'The Foundation', desc: 'Opened our first local repair shop for printers and cartridges.' },
-               { year: '2000', title: 'Enterprise Expansion', desc: 'We opened our showroom to give the best sale and service for all sorts of household and commercial printers.' },
-               { year: '2013', title: 'Network Expansion', desc: 'Surpassed around 20000+ clients from all over odisha.' },
-               { year: '2021', title: 'Full Tech Solution', desc: 'Expanded Services for Laptop & Desktop.' },
-               { year: 'Today', title: 'Industry Leaders', desc: 'Recognized as the best service provider for all sorts of Printers and Tech hardware.' }
+               { year: '2000', title: 'Showroom Launch', desc: 'We opened our showroom to provide the best sales and service for all types of household and commercial printers.' },
+               { year: '2013', title: 'Network Expansion', desc: 'Surpassed around 20,000+ clients from all over Odisha.' },
+               { year: '2021', title: 'Full Tech Solution', desc: 'Expanded services for Laptop & Desktop repair and sales.' },
+               { year: 'Today', title: 'Complete Tech Partner', desc: 'Recognized as a leading service provider for all types of printers, laptops, desktops, and tech hardware across the region.' }
              ].map((milestone, idx) => (
                <div key={idx} className={`mb-16 relative flex w-full ${idx % 2 === 0 ? 'md:justify-start' : 'md:justify-end'} fade-in-up`} style={{ animationDelay: `${idx * 150}ms` }}>
                   {/* Timeline Dot */}

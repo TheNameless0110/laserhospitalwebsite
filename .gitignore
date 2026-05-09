@@ -36,3 +36,15 @@ next-env.d.ts
 # build logs
 build.log
 node_modules
+catalogue_output.txt
+catalogue_utf8.txt
+check_env.js
+extract_catalogues.js
+gen_seed_sql.js
+parse_catalogue.js
+parse_catalogue_v2.js
+parsed_products.js
+run_seed.js
+seed.sql
+seed_b0_check.txt
+seed_batch_*.sql
