@@ -108,7 +108,7 @@ const ContactPage = ({ setToast }) => {
           <div className="lg:w-1/3 space-y-8 lg:pt-14">
             <h3 className="text-3xl font-black text-gray-900 mb-8">Get in Touch</h3>
             {[
-              { title: 'Call Desk', detail: '+91 9437066882, +91 7735524468', sub: 'Mon-Sat, 9:30am - 9pm', icon: Phone },
+              { title: 'Call Desk', detail: '+91 9437066882', detail2: '+91 7735524468', sub: 'Mon-Sat, 9:30am - 9pm', icon: Phone },
               { title: 'Email Support', detail: 'laserhospitalsupport@gmail.com', detail2: 'laser.hospital@gmail.com', sub: '', icon: Mail },
 
             ].map((info, idx) => (

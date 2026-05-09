@@ -34,7 +34,7 @@ export default function Footer() {
                   alt="Laser Hospital"
                   width={160}
                   height={36}
-                  className="h-8 w-auto object-contain brightness-0 invert"
+                  className="h-8 w-auto object-contain"
                 />
               </div>
             </Link>
