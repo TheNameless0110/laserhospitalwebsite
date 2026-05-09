@@ -22,6 +22,17 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Filter states
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    brands: true,
+    price: true
+  });
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -193,16 +204,47 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10">
-          {/* Sidebar Filter (Desktop) */}
-          <div className="w-full lg:w-72 flex-shrink-0">
-            <div className="bg-white p-8 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 sticky top-28">
-              <div className="flex items-center gap-2 font-bold text-xl text-gray-900 mb-6 pb-4 border-b border-gray-100">
+          {/* Mobile Filter Toggle */}
+          <div className="lg:hidden">
+            <button 
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              className="w-full flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-200 font-bold text-gray-900"
+            >
+              <div className="flex items-center gap-2">
+                <Filter className="w-5 h-5 text-orange-500" /> 
+                Filters
+                {(selectedBrands.length > 0 || maxPrice < 30000) && (
+                  <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full ml-2">
+                    {selectedBrands.length + (maxPrice < 30000 ? 1 : 0)}
+                  </span>
+                )}
+              </div>
+              <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isMobileFilterOpen ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+
+          {/* Sidebar Filter */}
+          <div className={`w-full lg:w-72 flex-shrink-0 ${isMobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
+            <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 sticky top-28">
+              <div className="hidden lg:flex items-center gap-2 font-bold text-xl text-gray-900 mb-6 pb-4 border-b border-gray-100">
                 <Filter className="w-5 h-5 text-orange-500" /> Filters
+                {(selectedBrands.length > 0 || maxPrice < 30000) && (
+                  <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full ml-auto">
+                    {selectedBrands.length + (maxPrice < 30000 ? 1 : 0)} active
+                  </span>
+                )}
               </div>
 
-              <div className="mb-8">
-                <h4 className="font-bold text-gray-900 mb-4">Brands</h4>
-                <div className="space-y-3">
+              {/* Brands Filter */}
+              <div className="mb-6 lg:mb-8 border-b border-gray-100 lg:border-none pb-6 lg:pb-0">
+                <button 
+                  onClick={() => toggleSection('brands')}
+                  className="w-full flex items-center justify-between font-bold text-gray-900 mb-4 focus:outline-none group"
+                >
+                  <span>Brands</span>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-transform duration-300 ${expandedSections.brands ? 'rotate-180' : ''}`} />
+                </button>
+                <div className={`space-y-3 overflow-hidden transition-all duration-300 ${expandedSections.brands ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                   {['HP', 'Epson', 'Canon', 'Fingers', 'AntEsports', 'Ranz', 'SmartPro', 'Lapcare', 'AARVEX'].map(brand => (
                     <label key={brand} className="flex items-center space-x-3 text-gray-700 cursor-pointer hover:text-orange-500 transition-colors group">
                       <input
@@ -210,6 +252,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                         checked={selectedBrands.includes(brand)}
                         onChange={() => toggleBrand(brand)}
                         className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500 transition-all cursor-pointer"
+                        onClick={(e) => e.stopPropagation()}
                       />
                       <span className="group-hover:font-medium">{brand}</span>
                     </label>
@@ -217,20 +260,40 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                 </div>
               </div>
 
-              <div>
-                <h4 className="font-bold text-gray-900 mb-4">Price Range (Max: ₹{maxPrice.toLocaleString('en-IN')})</h4>
-                <input
-                  type="range"
-                  min="0" max="30000" step="1000"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-orange-500 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-sm font-medium text-gray-500 mt-3">
-                  <span>₹0</span>
-                  <span>₹30,000+</span>
+              {/* Price Filter */}
+              <div className="mb-6 lg:mb-8">
+                <button 
+                  onClick={() => toggleSection('price')}
+                  className="w-full flex items-center justify-between font-bold text-gray-900 mb-4 focus:outline-none group"
+                >
+                  <span>Price Range</span>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-transform duration-300 ${expandedSections.price ? 'rotate-180' : ''}`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ${expandedSections.price ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <p className="text-sm text-gray-500 mb-3">Max: ₹{maxPrice.toLocaleString('en-IN')}</p>
+                  <input
+                    type="range"
+                    min="0" max="30000" step="1000"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    className="w-full accent-orange-500 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between text-sm font-medium text-gray-500 mt-3">
+                    <span>₹0</span>
+                    <span>₹30,000+</span>
+                  </div>
                 </div>
               </div>
+
+              {/* Clear Filters Button */}
+              {(selectedBrands.length > 0 || maxPrice < 30000) && (
+                <button
+                  onClick={() => { setSelectedBrands([]); setMaxPrice(30000); }}
+                  className="w-full mt-4 py-2 text-sm font-bold text-gray-500 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors border border-dashed border-gray-200 hover:border-orange-200"
+                >
+                  Clear All Filters
+                </button>
+              )}
             </div>
           </div>
 

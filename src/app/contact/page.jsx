@@ -14,7 +14,7 @@ import {
 import { productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
 import { supabase } from '@/lib/supabaseClient';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
-
+import Toast from '@/components/ui/Toast';
 
 
 const ContactPage = ({ setToast }) => {
@@ -285,8 +285,18 @@ export default function Page({ params }) {
       if(page === 'SERVICE_DETAIL') router.push(`/services/${item.id}`);
   };
 
-  
   const [toast, setToast] = useState(null);
-  return <ContactPage setToast={setToast} />;
+  const [toastType, setToastType] = useState('success');
+  
+  const handleSetToast = (msg, type = 'success') => {
+    setToast(msg);
+    setToastType(type);
+  };
 
+  return (
+    <>
+      <Toast message={toast} type={toastType} onClose={() => setToast(null)} />
+      <ContactPage setToast={handleSetToast} />
+    </>
+  );
 }
