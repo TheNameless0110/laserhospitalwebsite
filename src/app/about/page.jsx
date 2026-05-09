@@ -30,8 +30,13 @@ const AboutPage = () => (
      </div>
 
      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-10 mb-24">
-       <div className="inline-block mb-10 fade-in-up">
-          <img src="/logo.jpg" alt="Laser Hospital Logo" className="h-28 w-auto mx-auto bg-gray-50 p-4 rounded-3xl shadow-inner border border-gray-100" />
+       <div className="flex justify-center items-center mb-10 fade-in-up space-x-4">
+          <div className="bg-gray-50 p-4 rounded-3xl shadow-inner border border-gray-100 flex items-center h-32">
+             <img src="/N-LH-Logo.jpg" alt="Laser Hospital Logo" className="h-24 w-auto object-contain" />
+          </div>
+          <div className="bg-gray-50 p-4 px-6 rounded-3xl shadow-inner border border-gray-100 flex items-center h-32">
+             <img src="/LH-Company-Name.jpeg" alt="Laser Hospital" className="h-16 w-auto object-contain" />
+          </div>
        </div>
        <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-10 tracking-tight fade-in-up" style={{ animationDelay: '100ms' }}>The Engine Behind <br /> Your Tech Infrastructure</h1>
        

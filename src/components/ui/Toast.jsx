@@ -24,7 +24,7 @@ export default function Toast({ message, type = 'success', onClose, duration = 5
   const iconColor = type === 'success' ? 'text-green-500' : 'text-red-500';
 
   return (
-    <div className={`fixed top-24 right-4 z-50 transition-all duration-300 transform ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
+    <div className={`fixed top-24 right-4 z-[100] transition-all duration-300 transform ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
       <div className={`flex items-start p-4 rounded-xl border shadow-lg max-w-sm w-full ${bgClass} ${borderClass}`}>
         <div className="flex-shrink-0">
           <Icon className={`h-6 w-6 ${iconColor}`} aria-hidden="true" />

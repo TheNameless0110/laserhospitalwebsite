@@ -21,7 +21,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center mb-8 group cursor-pointer w-max">
               <div className="bg-white/10 p-2 rounded-xl border border-white/10 group-hover:border-orange-500/50 transition-colors mr-4">
                 <Image
-                  src="/N LH Logo.jpg.jpg"
+                  src="/N-LH-Logo.jpg"
                   alt="Laser Hospital Logo"
                   width={48}
                   height={48}
@@ -30,7 +30,7 @@ export default function Footer() {
               </div>
               <div className="bg-white/10 p-2 px-3 rounded-xl border border-white/10 group-hover:border-orange-500/50 transition-colors">
                 <Image
-                  src="/LH Company Name.jpg.jpeg"
+                  src="/LH-Company-Name.jpeg"
                   alt="Laser Hospital"
                   width={160}
                   height={36}
@@ -78,9 +78,9 @@ export default function Footer() {
               <span className="w-2 h-2 bg-cyan-500 mr-3 rounded-full"></span> Visit Store
             </h4>
             <div className="space-y-6 text-gray-400 font-light text-base">
-              <a href="https://www.google.com/maps/search/?api=1&query=Plot-270,+First+Floor,+Near+Empires+Hotel,+Saheed+Nagar,+Bhubaneswar,+Odisha+751007" target="_blank" rel="noopener noreferrer" className="flex items-start group cursor-pointer hover:text-orange-400 transition-colors">
+              <a href="https://maps.app.goo.gl/h17Yak221WC9qx3GA" target="_blank" rel="noopener noreferrer" className="flex items-start group cursor-pointer hover:text-orange-400 transition-colors">
                 <MapPin className="w-5 h-5 text-gray-500 mr-4 shrink-0 mt-1 group-hover:text-orange-500 transition-colors" />
-                <p>Plot-270, First Floor, Near Empires Hotel<br/>Saheed Nagar, Bhubaneswar, Odisha, Pin - 751007</p>
+                <p>First Floor, PLOT NO-270, near Apollo Pharmacy,<br/>E-Block, Saheed Nagar, Bhubaneswar, Odisha 751007</p>
               </a>
               <div className="space-y-3">
                 <a href="tel:+919437066882" className="flex items-center group cursor-pointer hover:text-orange-400 transition-colors">

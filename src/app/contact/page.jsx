@@ -24,7 +24,7 @@ const ContactPage = ({ setToast }) => {
   const [errors, setErrors] = useState({});
   const [isDriverModalOpen, setIsDriverModalOpen] = useState(false);
 
-  const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Plot-270,+First+Floor,+Near+Empires+Hotel,+Saheed+Nagar,+Bhubaneswar,+Odisha+751007';
+  const googleMapsUrl = 'https://maps.app.goo.gl/h17Yak221WC9qx3GA';
 
   const driverLinks = [
     { name: 'CANON', url: 'https://in.canon/en/support/download' },
@@ -61,13 +61,12 @@ const ContactPage = ({ setToast }) => {
         }]);
         if (error) throw error;
         setFormData({ name: '', email: '', type: 'General Inquiry', message: '' });
-        setToast('Inquiry submitted successfully! We will contact you shortly.');
+        setToast('Inquiry submitted successfully! We will contact you shortly.', 'success');
       } catch (err) {
         console.error('Error submitting inquiry:', err);
-        setToast('Failed to submit inquiry. Please try again.');
+        setToast('Failed to submit inquiry. Please try again.', 'error');
       } finally {
         setIsSubmitting(false);
-        setTimeout(() => setToast(null), 4000);
       }
     }
   };
@@ -92,7 +91,7 @@ const ContactPage = ({ setToast }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto gap-6 mb-20 fade-in-up">
           {[
             { title: 'Download Drivers', icon: Download, action: () => setIsDriverModalOpen(true) },
-            { title: 'Store Directions & Hours', icon: MapPin, action: () => window.open(googleMapsUrl, '_blank') }
+            { title: 'Store Directions & Working Hours', icon: MapPin, action: () => window.open(googleMapsUrl, '_blank') }
           ].map((link, i) => (
             <div key={i} onClick={link.action} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-orange-500 cursor-pointer group transition-all duration-300 flex flex-col items-center text-center">
               <div className="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-orange-50 transition-colors">
@@ -109,9 +108,9 @@ const ContactPage = ({ setToast }) => {
           <div className="lg:w-1/3 space-y-8 lg:pt-14">
             <h3 className="text-3xl font-black text-gray-900 mb-8">Get in Touch</h3>
             {[
-              { title: 'Call Desk', detail: '+91 9437066882', sub: 'Mon-Sat, 9:30am - 9pm', icon: Phone },
-              { title: 'Email Support', detail: 'laserhospitalsupport@gmail.com', sub: '', icon: Mail },
-              { title: 'Email Support', detail: 'laser.hospital@gmail.com', sub: '', icon: Mail },
+              { title: 'Call Desk', detail: '+91 9437066882, +91 7735524468', sub: 'Mon-Sat, 9:30am - 9pm', icon: Phone },
+              { title: 'Email Support', detail: 'laserhospitalsupport@gmail.com', detail2: 'laser.hospital@gmail.com', sub: '', icon: Mail },
+
             ].map((info, idx) => (
               <div key={idx} className="bg-white p-8 rounded-[2rem] shadow-md shadow-gray-200/50 border border-gray-100 flex items-start fade-in-up" style={{ animationDelay: `${idx * 150}ms` }}>
                 <div className="w-14 h-14 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0 mr-6">
@@ -120,6 +119,7 @@ const ContactPage = ({ setToast }) => {
                 <div className="flex-1 min-w-0">
                   <h4 className="font-bold text-gray-900 text-xl mb-1">{info.title}</h4>
                   <p className="text-gray-800 font-medium text-lg break-all">{info.detail}</p>
+                  {info.detail2 && <p className="text-gray-800 font-medium text-lg break-all">{info.detail2}</p>}
                   {info.sub && <p className="text-gray-500 text-sm mt-1">{info.sub}</p>}
                 </div>
               </div>
@@ -146,7 +146,7 @@ const ContactPage = ({ setToast }) => {
                   <h4 className="font-bold text-white text-xl">Headquarters (Drop-off)</h4>
                   <ArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-orange-400 transition-colors" />
                 </div>
-                <p className="text-gray-300 font-medium text-lg">Plot-270, First Floor, Near Empires Hotel<br/>Saheed Nagar, Bhubaneswar, Odisha, Pin - 751007</p>
+                <p className="text-gray-300 font-medium text-lg">First Floor, PLOT NO-270, near Apollo Pharmacy,<br/>E-Block, Saheed Nagar, Bhubaneswar, Odisha 751007</p>
               </div>
             </div>
           </div>

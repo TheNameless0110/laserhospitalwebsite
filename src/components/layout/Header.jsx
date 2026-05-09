@@ -14,7 +14,9 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchRef = useRef(null);
+  const desktopSearchRef = useRef(null);
+  const mobileSearchRef = useRef(null);
+  const searchIconRef = useRef(null);
   const debounceRef = useRef(null);
 
   const navLinks = [
@@ -28,7 +30,11 @@ export default function Header() {
   // Close suggestions on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
+      const clickedOutsideDesktop = desktopSearchRef.current && !desktopSearchRef.current.contains(e.target);
+      const clickedOutsideMobile = mobileSearchRef.current && !mobileSearchRef.current.contains(e.target);
+      const clickedOutsideIcon = searchIconRef.current && !searchIconRef.current.contains(e.target);
+      
+      if (clickedOutsideDesktop && clickedOutsideMobile && clickedOutsideIcon) {
         setShowSuggestions(false);
         setIsSearchOpen(false);
       }
@@ -59,7 +65,12 @@ export default function Header() {
     if (e.key === 'Enter' && searchQuery.trim()) {
       setShowSuggestions(false);
       setIsSearchOpen(false);
-      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
+      if (suggestions.length > 0) {
+        router.push(`/products/${suggestions[0].id}`);
+        setSearchQuery('');
+      } else {
+        router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
+      }
     }
   };
 
@@ -78,7 +89,7 @@ export default function Header() {
           {/* Logo + Company Name */}
           <Link href="/" className="flex items-center cursor-pointer group shrink-0">
             <Image
-              src="/N LH Logo.jpg.jpg"
+              src="/N-LH-Logo.jpg"
               alt="Laser Hospital Logo"
               width={48}
               height={48}
@@ -86,7 +97,7 @@ export default function Header() {
               priority
             />
             <Image
-              src="/LH Company Name.jpg.jpeg"
+              src="/LH-Company-Name.jpeg"
               alt="Laser Hospital"
               width={160}
               height={40}
@@ -114,7 +125,7 @@ export default function Header() {
           </nav>
 
           {/* Search + Mobile Menu */}
-          <div className="flex items-center justify-end shrink-0 space-x-3" ref={searchRef}>
+          <div className="flex items-center justify-end shrink-0 space-x-3" ref={desktopSearchRef}>
             {/* Desktop Search Bar (always visible on lg+) */}
             <div className="hidden lg:flex items-center relative">
               <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 focus-within:ring-2 focus-within:ring-orange-500 focus-within:bg-white transition-all shadow-inner">
@@ -151,6 +162,7 @@ export default function Header() {
 
             {/* Tablet/Mobile Search Icon (visible below lg) */}
             <button
+              ref={searchIconRef}
               className="lg:hidden p-2 text-gray-600 hover:text-orange-500 transition-colors rounded-full hover:bg-orange-50"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
@@ -170,7 +182,7 @@ export default function Header() {
 
         {/* Mobile/Tablet Search Expandable Bar */}
         {isSearchOpen && (
-          <div className="lg:hidden pb-3 relative" ref={searchRef}>
+          <div className="lg:hidden pb-3 relative" ref={mobileSearchRef}>
             <div className="flex items-center bg-gray-100 rounded-full px-4 py-2.5 focus-within:ring-2 focus-within:ring-orange-500 focus-within:bg-white transition-all shadow-inner">
               <Search className="w-4 h-4 text-gray-400 mr-2" />
               <input 
