@@ -19,7 +19,7 @@ import Toast from '@/components/ui/Toast';
 
 const ContactPage = ({ setToast }) => {
   // Form Validation State
-  const [formData, setFormData] = useState({ name: '', email: '', type: 'General Inquiry', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', type: 'General Inquiry', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [isDriverModalOpen, setIsDriverModalOpen] = useState(false);
@@ -180,19 +180,32 @@ const ContactPage = ({ setToast }) => {
                   {errors.email && <p className="text-red-500 text-sm mt-2 flex items-center"><AlertCircle className="w-4 h-4 mr-1"/> {errors.email}</p>}
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">Inquiry Type</label>
-                <div className="relative">
-                  <select 
-                    value={formData.type}
-                    onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-full px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg appearance-none cursor-pointer"
-                  >
-                    <option>General Inquiry</option>
-                    <option>Hardware Repair Inquiry</option>
-                    <option>Sales & Enterprise Pricing</option>
-                  </select>
-                  <ChevronDown className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none w-6 h-6"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">Phone Number</label>
+                  <input 
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className={`w-full px-5 py-4 rounded-xl bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg`} 
+                    placeholder="+91 9876543210" 
+                  />
+                  {errors.phone && <p className="text-red-500 text-sm mt-2 flex items-center"><AlertCircle className="w-4 h-4 mr-1"/> {errors.phone}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">Inquiry Type</label>
+                  <div className="relative">
+                    <select 
+                      value={formData.type}
+                      onChange={(e) => setFormData({...formData, type: e.target.value})}
+                      className="w-full px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg appearance-none cursor-pointer"
+                    >
+                      <option>General Inquiry</option>
+                      <option>Hardware Repair Inquiry</option>
+                      <option>Sales & Enterprise Pricing</option>
+                    </select>
+                    <ChevronDown className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none w-6 h-6"/>
+                  </div>
                 </div>
               </div>
               <div>
