@@ -163,7 +163,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-48 h-48 object-cover rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-90" 
+                        className="w-48 h-48 object-contain rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-90" 
                         onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
                       />
                     )}
@@ -344,7 +344,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                         <img 
                           src={product.imageUrl} 
                           alt={product.name} 
-                          className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-all duration-500 mix-blend-multiply" 
+                          className="w-full h-full object-contain rounded-xl group-hover:scale-110 transition-all duration-500" 
                           onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
                         />
                       )}

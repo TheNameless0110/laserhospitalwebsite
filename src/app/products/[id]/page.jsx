@@ -77,7 +77,7 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                   <img
                     src={validImages[activeImage]}
                     alt={selectedProduct.name}
-                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
+                    className="w-full h-full object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
                   />
                   {validImages.length > 1 && (
@@ -114,7 +114,7 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                   <img
                     src={imgPath}
                     alt={`${selectedProduct.name} view ${i + 1}`}
-                    className="w-full h-full object-cover rounded-xl mix-blend-multiply transition-opacity"
+                    className="w-full h-full object-contain rounded-xl transition-opacity"
                     onError={(e) => { e.target.parentElement.style.display = 'none'; }}
                   />
                 </div>
