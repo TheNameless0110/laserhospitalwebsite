@@ -36,9 +36,12 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
         if (data.type === 'ACCESSORIES') IconComp = Link;
         setSelectedProduct({ ...data, badgeColor: data.badge_color, imageIcon: IconComp });
 
-        // Build image paths from product name
-        const suffixes = ['(1st)', '(2nd)'];
-        const paths = suffixes.map(s => `/${data.name} ${s}.jpg`);
+        // Use images from database if available, otherwise fallback to guessing
+        let paths = data.images || [];
+        if (paths.length === 0) {
+          const suffixes = ['(1st)', '(2nd)'];
+          paths = suffixes.map(s => `/${data.name} ${s}.jpg`);
+        }
         setValidImages(paths);
         setActiveImage(0);
       }
