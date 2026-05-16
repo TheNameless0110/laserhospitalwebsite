@@ -40,7 +40,7 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
         let paths = data.images || [];
         if (paths.length === 0) {
           const suffixes = ['(1st)', '(2nd)'];
-          paths = suffixes.map(s => `/${data.name} ${s}.jpg`);
+          paths = suffixes.map(s => `/${data.id}${s}.jpg`);
         }
         setValidImages(paths);
         setActiveImage(0);
@@ -84,15 +84,17 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                     <>
                       <button 
                         onClick={(e) => { e.stopPropagation(); setActiveImage(prev => prev === 0 ? validImages.length - 1 : prev - 1); }}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors z-20 opacity-0 group-hover:opacity-100"
+                        className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20 group-hover:opacity-100"
+                        aria-label="Previous image"
                       >
-                        <ChevronLeft className="w-6 h-6 text-gray-700" />
+                        <ChevronLeft className="w-8 h-8 text-gray-900" />
                       </button>
                       <button 
                         onClick={(e) => { e.stopPropagation(); setActiveImage(prev => (prev + 1) % validImages.length); }}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors z-20 opacity-0 group-hover:opacity-100"
+                        className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20 group-hover:opacity-100"
+                        aria-label="Next image"
                       >
-                        <ChevronRight className="w-6 h-6 text-gray-700" />
+                        <ChevronRight className="w-8 h-8 text-gray-900" />
                       </button>
                     </>
                   )}

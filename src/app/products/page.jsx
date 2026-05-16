@@ -52,7 +52,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
             ...p,
             badgeColor: p.badge_color,
             imageIcon: IconComponent,
-            imageUrl: p.images && p.images.length > 0 ? p.images[0] : `/${p.name} (1st).jpg`
+            imageUrl: p.images && p.images.length > 0 ? p.images[0] : `/${p.id}(1st).jpg`
           };
         });
         setProducts(mappedData);
@@ -163,7 +163,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-48 h-48 object-contain rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-90" 
+                        className="w-48 h-48 object-contain rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-95 transition-transform duration-500 hover:scale-105" 
                         onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
                       />
                     )}
@@ -344,7 +344,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                         <img 
                           src={product.imageUrl} 
                           alt={product.name} 
-                          className="w-full h-full object-contain rounded-xl group-hover:scale-110 transition-all duration-500" 
+                          className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-all duration-500" 
                           onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
                         />
                       )}
