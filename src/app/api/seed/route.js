@@ -20,8 +20,9 @@ export async function GET() {
       const { imageIcon, badgeColor, ...rest } = p;
       
       // Match images for this product
+      // File format is "Product Name Prefix (1st).jpg" and p.name might be longer.
       const productImages = files
-        .filter(f => f.startsWith(p.name) && f.match(/\.(jpg|jpeg|png|webp)$/i))
+        .filter(f => p.name.startsWith(f.split(' (')[0]) && f.match(/\.(jpg|jpeg|png|webp)$/i))
         .map(f => `/${f}`);
       productImages.sort(); // ensures (1st) comes before (2nd)
 

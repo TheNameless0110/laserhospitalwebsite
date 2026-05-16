@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
-  Menu, X, Search, ChevronRight, User, ShoppingCart,
+  Menu, X, Search, ChevronRight, ChevronLeft, User, ShoppingCart,
   Play, Monitor, Printer, Droplet, Cpu, Disc, Package,
   Phone, Mail, MapPin, CheckCircle, Star, Filter, ArrowRight,
   Settings, Wrench, Clock, ShieldCheck, List, Grid, Tag, 
@@ -73,12 +73,30 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                 </div>
               )}
               {validImages.length > 0 ? (
-                <img
-                  src={validImages[activeImage]}
-                  alt={selectedProduct.name}
-                  className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
-                  onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
-                />
+                <>
+                  <img
+                    src={validImages[activeImage]}
+                    alt={selectedProduct.name}
+                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
+                  />
+                  {validImages.length > 1 && (
+                    <>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => prev === 0 ? validImages.length - 1 : prev - 1); }}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors z-20 opacity-0 group-hover:opacity-100"
+                      >
+                        <ChevronLeft className="w-6 h-6 text-gray-700" />
+                      </button>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => (prev + 1) % validImages.length); }}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition-colors z-20 opacity-0 group-hover:opacity-100"
+                      >
+                        <ChevronRight className="w-6 h-6 text-gray-700" />
+                      </button>
+                    </>
+                  )}
+                </>
               ) : null}
               <selectedProduct.imageIcon
                 className={`w-full h-full p-14 text-gray-300 group-hover:scale-105 transition-transform duration-500 ${validImages.length > 0 ? 'hidden' : ''}`}

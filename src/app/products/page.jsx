@@ -51,7 +51,8 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
           return {
             ...p,
             badgeColor: p.badge_color,
-            imageIcon: IconComponent
+            imageIcon: IconComponent,
+            imageUrl: p.images && p.images.length > 0 ? p.images[0] : `/${p.name} (1st).jpg`
           };
         });
         setProducts(mappedData);
@@ -158,11 +159,18 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                     <button onClick={() => navigateTo('PRODUCT_DETAIL', product)} className="bg-white text-gray-900 px-8 py-3 rounded-full font-bold hover:bg-gray-100 hover:scale-105 transition-all">Shop Now</button>
                   </div>
                   <div className="md:w-1/3 flex justify-center">
-                    {product.imageUrl ? (
-                      <img src={product.imageUrl} alt={product.name} className="w-48 h-48 object-cover rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-90" />
-                    ) : (
-                      <product.imageIcon className="w-48 h-48 text-white opacity-80" strokeWidth={1} />
+                    {product.imageUrl && (
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name} 
+                        className="w-48 h-48 object-cover rounded-2xl shadow-2xl ring-4 ring-white/20 opacity-90" 
+                        onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
+                      />
                     )}
+                    <product.imageIcon 
+                      className={`w-48 h-48 text-white opacity-80 ${product.imageUrl ? 'hidden' : ''}`} 
+                      strokeWidth={1} 
+                    />
                   </div>
                 </div>
               ))}
@@ -332,11 +340,18 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                       <div className="absolute top-4 right-4 z-10 bg-white px-3 py-1 rounded-lg text-xs font-black text-gray-800 shadow-sm">
                         {product.brand}
                       </div>
-                      {product.imageUrl ? (
-                        <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-all duration-500 mix-blend-multiply" />
-                      ) : (
-                        <product.imageIcon className={`${viewMode === 'list' ? 'w-24 h-24' : 'w-32 h-32'} text-gray-300 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-500`} strokeWidth={1.5} />
+                      {product.imageUrl && (
+                        <img 
+                          src={product.imageUrl} 
+                          alt={product.name} 
+                          className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-all duration-500 mix-blend-multiply" 
+                          onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
+                        />
                       )}
+                      <product.imageIcon 
+                        className={`${viewMode === 'list' ? 'w-24 h-24' : 'w-32 h-32'} text-gray-300 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-500 ${product.imageUrl ? 'hidden' : ''}`} 
+                        strokeWidth={1.5} 
+                      />
                     </div>
 
                     {/* Content */}
