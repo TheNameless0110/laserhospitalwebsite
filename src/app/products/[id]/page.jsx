@@ -20,6 +20,8 @@ import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedCompone
 const ProductDetailPage = ({ productId, navigateTo }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeTab, setActiveTab] = useState('Details');
+  const [activeImage, setActiveImage] = useState(0);
+  const [validImages, setValidImages] = useState([]);
 
   useEffect(() => {
     if (!productId) return;
@@ -33,6 +35,12 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
         if (data.type === 'PERIPHERALS') IconComp = Mouse;
         if (data.type === 'ACCESSORIES') IconComp = Link;
         setSelectedProduct({ ...data, badgeColor: data.badge_color, imageIcon: IconComp });
+
+        // Build image paths from product name
+        const suffixes = ['(1st)', '(2nd)'];
+        const paths = suffixes.map(s => `/${data.name} ${s}.jpg`);
+        setValidImages(paths);
+        setActiveImage(0);
       }
     };
     fetchProduct();
@@ -61,23 +69,46 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                    {selectedProduct.badge}
                 </div>
               )}
-              {selectedProduct.imageUrl ? (
-                <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" />
-              ) : (
-                <selectedProduct.imageIcon className="w-full h-full p-14 text-gray-300 group-hover:scale-105 transition-transform duration-500" strokeWidth={1} />
-              )}
+              {validImages.length > 0 ? (
+                <img
+                  src={validImages[activeImage]}
+                  alt={selectedProduct.name}
+                  className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 mix-blend-multiply"
+                  onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
+                />
+              ) : null}
+              <selectedProduct.imageIcon
+                className={`w-full h-full p-14 text-gray-300 group-hover:scale-105 transition-transform duration-500 ${validImages.length > 0 ? 'hidden' : ''}`}
+                strokeWidth={1}
+                style={validImages.length > 0 ? { display: 'none' } : {}}
+              />
             </div>
-            <div className="flex gap-4">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="bg-gray-50 rounded-2xl aspect-square w-1/4 border border-gray-200 cursor-pointer hover:border-orange-500 flex items-center justify-center p-2 transition-colors overflow-hidden">
-                   {selectedProduct.imageUrl ? (
-                     <img src={selectedProduct.imageUrl} alt="" className="w-full h-full object-cover rounded-xl opacity-70 hover:opacity-100 mix-blend-multiply transition-opacity" />
-                   ) : (
-                     <selectedProduct.imageIcon className="w-full h-full p-4 text-gray-400" strokeWidth={1} />
-                   )}
+            <div className="flex gap-4 mb-4">
+              {validImages.map((imgPath, i) => (
+                <div
+                  key={i}
+                  onClick={() => setActiveImage(i)}
+                  className={`bg-gray-50 rounded-2xl aspect-square w-1/4 border-2 cursor-pointer flex items-center justify-center p-2 transition-all overflow-hidden ${activeImage === i ? 'border-orange-500 ring-2 ring-orange-200' : 'border-gray-200 hover:border-orange-300'}`}
+                >
+                  <img
+                    src={imgPath}
+                    alt={`${selectedProduct.name} view ${i + 1}`}
+                    className="w-full h-full object-cover rounded-xl mix-blend-multiply transition-opacity"
+                    onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                  />
+                </div>
+              ))}
+              {/* Fill remaining slots with icon placeholders if less than 2 valid images */}
+              {validImages.length < 2 && Array.from({ length: 2 - validImages.length }).map((_, i) => (
+                <div key={`placeholder-${i}`} className="bg-gray-50 rounded-2xl aspect-square w-1/4 border border-gray-200 flex items-center justify-center p-2">
+                  <selectedProduct.imageIcon className="w-full h-full p-4 text-gray-300" strokeWidth={1} />
                 </div>
               ))}
             </div>
+            {/* Product Image Disclaimer */}
+            <p className="text-xs text-gray-400 leading-relaxed mt-2">
+              <span className="font-semibold text-gray-500">Disclaimer:</span> All product images displayed on this website are for reference and illustrative purposes only and remain the intellectual property of their respective manufacturers. Laser Hospital does not claim ownership of any brand trademarks, logos, or product visuals shown. Some images may be digitally enhanced or AI-generated for presentation purposes; the actual product design, colour, dimensions, and packaging may differ from what is depicted. Laser Hospital is an authorized reseller and service provider — no commercial misrepresentation is intended.
+            </p>
           </div>
 
           {/* Product Info */}

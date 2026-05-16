@@ -57,7 +57,9 @@ export default function CookieConsent() {
           <div>
             <h4 className="font-bold text-lg mb-1">We value your privacy</h4>
             <p className="text-gray-400 text-sm md:text-base max-w-xl">
-              We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+              We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. Read our{' '}
+              <button onClick={() => window.dispatchEvent(new CustomEvent('open-privacy-modal'))} className="text-orange-400 hover:text-orange-300 underline underline-offset-2 font-medium">Privacy Policy</button>{' '}and{' '}
+              <button onClick={() => window.dispatchEvent(new CustomEvent('open-terms-modal'))} className="text-orange-400 hover:text-orange-300 underline underline-offset-2 font-medium">Terms of Service</button>.
             </p>
           </div>
         </div>
@@ -77,7 +79,7 @@ export default function CookieConsent() {
           </button>
         </div>
         
-        <button onClick={declineCookies} className="absolute top-4 right-4 p-2 text-gray-500 hover:text-white transition-colors block md:hidden">
+        <button onClick={declineCookies} className="absolute top-4 right-4 p-2 text-gray-500 hover:text-white transition-colors">
             <X className="w-5 h-5" />
         </button>
       </div>

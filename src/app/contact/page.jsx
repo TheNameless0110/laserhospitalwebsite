@@ -77,7 +77,7 @@ const ContactPage = ({ setToast }) => {
       <div className="bg-gray-900 py-24 mb-20 mt-[-2rem] relative overflow-hidden">
         <HeroBackgroundSlider 
           images={contactImages} 
-          overlayClass="bg-gradient-to-r from-orange-900/60 to-gray-900/60" 
+          overlayClass="bg-gradient-to-r from-gray-900/80 via-gray-900/40 to-transparent" 
         />
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight fade-in-up">Contact Us</h1>
@@ -164,7 +164,7 @@ const ContactPage = ({ setToast }) => {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     className={`w-full px-5 py-4 rounded-xl bg-gray-50 border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg`} 
-                    placeholder="John Doe" 
+                    placeholder="Rajesh Kumar" 
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-2 flex items-center"><AlertCircle className="w-4 h-4 mr-1"/> {errors.name}</p>}
                 </div>
@@ -175,7 +175,7 @@ const ContactPage = ({ setToast }) => {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className={`w-full px-5 py-4 rounded-xl bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg`} 
-                    placeholder="john@company.com" 
+                    placeholder="rajesh.kumar@outlook.in" 
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-2 flex items-center"><AlertCircle className="w-4 h-4 mr-1"/> {errors.email}</p>}
                 </div>
@@ -188,7 +188,7 @@ const ContactPage = ({ setToast }) => {
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     className={`w-full px-5 py-4 rounded-xl bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-lg`} 
-                    placeholder="+91 9876543210" 
+                    placeholder="+91 97423 XXXXX" 
                   />
                   {errors.phone && <p className="text-red-500 text-sm mt-2 flex items-center"><AlertCircle className="w-4 h-4 mr-1"/> {errors.phone}</p>}
                 </div>

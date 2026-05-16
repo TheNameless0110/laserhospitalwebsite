@@ -45,7 +45,7 @@ const ServicesPage = ({ navigateTo }) => {
       <div className="bg-gray-900 py-24 mb-20 mt-[-2rem] relative overflow-hidden">
         <HeroBackgroundSlider 
           images={serviceImages} 
-          overlayClass="bg-gradient-to-r from-cyan-900/60 to-pink-900/60" 
+          overlayClass="bg-gradient-to-r from-gray-900/80 via-gray-900/40 to-transparent" 
         />
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight fade-in-up">Professional Repair Services</h1>

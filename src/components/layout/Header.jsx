@@ -142,7 +142,7 @@ export default function Header() {
               </div>
               {/* Desktop Suggestions Dropdown */}
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden w-80 z-50">
+                <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-80 w-80 z-50">
                   {suggestions.map((s) => (
                     <button
                       key={s.id}
@@ -201,7 +201,7 @@ export default function Header() {
             </div>
             {/* Mobile Suggestions Dropdown */}
             {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 mx-4">
+              <div className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-80 z-50 mx-4">
                 {suggestions.map((s) => (
                   <button
                     key={s.id}

@@ -23,7 +23,7 @@ const HomePage = ({ navigateTo }) => (
       <div className="absolute top-0 left-0 w-full h-full -z-10 bg-amber-500">
         <HeroBackgroundSlider 
           images={homeImages} 
-          overlayClass="bg-gradient-to-br from-amber-500/80 via-orange-500/80 to-orange-600/90" 
+          overlayClass="bg-gradient-to-r from-gray-900/80 via-gray-900/40 to-transparent" 
         />
         {/* Subtle patterns/shapes */}
         <div className="absolute top-20 right-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
