@@ -69,10 +69,10 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
   const [touchEnd, setTouchEnd] = useState(null);
 
   const featuredProducts = products.length > 0 ? [
-    products.find(p => p.id === 'hp_laser_323sdnw') || products[0],
-    products.find(p => p.id === 'epson_l8050') || products[1],
-    products.find(p => p.id === 'canon_g3770') || products[2],
-    products.find(p => p.id === 'antesports_km540') || products[3]
+    products.find(p => p.id === 'hp_laser_mfp_323sdnw') || products[0],
+    products.find(p => p.id === 'epson_ecotank_l8050') || products[1],
+    products.find(p => p.id === 'canon_pixma_g3770') || products[2],
+    products.find(p => p.id === 'antesports_antesports_km540_gaming_keyboard_mouse_combo') || products[3]
   ].filter(Boolean) : [];
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
 
   // Compute unique brands dynamically
   const uniqueBrands = useMemo(() => {
-    const brands = new Set(products.map(p => p.brand));
+    const brands = new Set(products.map(p => p.brand || 'Unknown'));
     return Array.from(brands).sort();
   }, [products]);
 
@@ -113,8 +113,9 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
   // Apply Filters and Search
   const filteredProducts = products.filter(p => {
     const matchCat = activeCat === 'ALL PRODUCTS' || p.type === activeCat;
-    const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || p.brand.toLowerCase().includes(searchQuery.toLowerCase().trim());
-    const matchBrand = selectedBrands.length === 0 || selectedBrands.includes(p.brand);
+    const q = (searchQuery || '').toLowerCase().trim();
+    const matchSearch = (p.name || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q);
+    const matchBrand = selectedBrands.length === 0 || selectedBrands.includes(p.brand || 'Unknown');
     return matchCat && matchSearch && matchBrand;
   });
 
@@ -226,9 +227,9 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
               <div className="flex items-center gap-2">
                 <Filter className="w-5 h-5 text-orange-500" /> 
                 Filters
-                {(selectedBrands.length > 0 || maxPrice < 30000) && (
+                {selectedBrands.length > 0 && (
                   <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full ml-2">
-                    {selectedBrands.length + (maxPrice < 30000 ? 1 : 0)}
+                    {selectedBrands.length}
                   </span>
                 )}
               </div>
