@@ -16,12 +16,65 @@ import { supabase } from '@/lib/supabaseClient';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 
 
+// Component for a single image that probes multiple extensions
+const EXTS = ['jpg', 'jpeg', 'png', 'webp'];
+
+const ProductSlotImage = ({ productId, suffix, name, className, style, onLoaded, onAllFailed }) => {
+  const [extIdx, setExtIdx] = React.useState(0);
+  const [loaded, setLoaded] = React.useState(false);
+  const [failed, setFailed] = React.useState(false);
+
+  const tryNext = () => {
+    if (extIdx + 1 < EXTS.length) {
+      setExtIdx(i => i + 1);
+    } else {
+      setFailed(true);
+      if (onAllFailed) onAllFailed();
+    }
+  };
+
+  const handleLoad = () => {
+    setLoaded(true);
+    if (onLoaded) onLoaded(`/${productId}(${suffix}).${EXTS[extIdx]}`);
+  };
+
+  if (failed) return null;
+  return (
+    <img
+      src={`/${productId}(${suffix}).${EXTS[extIdx]}`}
+      alt={`${name} ${suffix}`}
+      className={className}
+      style={style}
+      onLoad={handleLoad}
+      onError={tryNext}
+    />
+  );
+};
 
 const ProductDetailPage = ({ productId, navigateTo }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeTab, setActiveTab] = useState('Details');
   const [activeImage, setActiveImage] = useState(0);
-  const [validImages, setValidImages] = useState([]);
+  // discoveredImages: array of { suffix, src } for confirmed existing images
+  const [discoveredImages, setDiscoveredImages] = useState([]);
+  // hiddenSlots: set of suffixes that have no image
+  const [hiddenSlots, setHiddenSlots] = useState(new Set());
+
+  const SUFFIXES = ['1st', '2nd', '3rd', '4th', '5th'];
+
+  const handleImageLoaded = (suffix, src) => {
+    setDiscoveredImages(prev => {
+      if (prev.find(i => i.suffix === suffix)) return prev;
+      const ordered = [...prev, { suffix, src }].sort(
+        (a, b) => SUFFIXES.indexOf(a.suffix) - SUFFIXES.indexOf(b.suffix)
+      );
+      return ordered;
+    });
+  };
+
+  const handleSlotFailed = (suffix) => {
+    setHiddenSlots(prev => new Set([...prev, suffix]));
+  };
 
   useEffect(() => {
     if (!productId) return;
@@ -35,21 +88,16 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
         if (data.type === 'PERIPHERALS') IconComp = Mouse;
         if (data.type === 'ACCESSORIES') IconComp = Link;
         setSelectedProduct({ ...data, badgeColor: data.badge_color, imageIcon: IconComp });
-
-        // Use images from database if available, otherwise fallback to guessing
-        let paths = data.images || [];
-        if (paths.length === 0) {
-          const suffixes = ['(1st)', '(2nd)'];
-          paths = suffixes.map(s => `/${data.id}${s}.jpg`);
-        }
-        setValidImages(paths);
+        // Reset image state on product change
+        setDiscoveredImages([]);
+        setHiddenSlots(new Set());
         setActiveImage(0);
       }
     };
     fetchProduct();
   }, [productId]);
-  if (!selectedProduct) return <div className="pt-32 pb-32 text-center text-xl font-bold bg-white min-h-screen">Loading product details...</div>;
 
+  if (!selectedProduct) return <div className="pt-32 pb-32 text-center text-xl font-bold bg-white min-h-screen">Loading product details...</div>;
 
   return (
     <div className="pt-24 pb-24 animate-in fade-in bg-white min-h-screen">
@@ -66,32 +114,46 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
         <div className="flex flex-col lg:flex-row gap-16 mb-20">
           {/* Image Gallery */}
           <div className="lg:w-1/2">
+            {/* Hidden probing images — load silently to discover which exist */}
+            <div style={{ display: 'none' }} aria-hidden="true">
+              {SUFFIXES.map(suffix => (
+                <ProductSlotImage
+                  key={suffix}
+                  productId={selectedProduct.id}
+                  suffix={suffix}
+                  name={selectedProduct.name}
+                  onLoaded={(src) => handleImageLoaded(suffix, src)}
+                  onAllFailed={() => handleSlotFailed(suffix)}
+                />
+              ))}
+            </div>
+
+            {/* Main image display */}
             <div className="bg-gray-50 rounded-3xl aspect-square flex items-center justify-center border border-gray-100 mb-6 p-2 relative group hover:border-orange-500 transition-colors duration-300 overflow-hidden">
               {selectedProduct.badge && (
                 <div className={`absolute top-6 left-6 z-10 ${selectedProduct.badgeColor} text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md`}>
                    {selectedProduct.badge}
                 </div>
               )}
-              {validImages.length > 0 ? (
+              {discoveredImages.length > 0 ? (
                 <>
                   <img
-                    src={validImages[activeImage]}
+                    src={discoveredImages[activeImage]?.src}
                     alt={selectedProduct.name}
                     className="w-full h-full object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
                   />
-                  {validImages.length > 1 && (
+                  {discoveredImages.length > 1 && (
                     <>
                       <button 
-                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => prev === 0 ? validImages.length - 1 : prev - 1); }}
-                        className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20 group-hover:opacity-100"
+                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => prev === 0 ? discoveredImages.length - 1 : prev - 1); }}
+                        className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20"
                         aria-label="Previous image"
                       >
                         <ChevronLeft className="w-8 h-8 text-gray-900" />
                       </button>
                       <button 
-                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => (prev + 1) % validImages.length); }}
-                        className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20 group-hover:opacity-100"
+                        onClick={(e) => { e.stopPropagation(); setActiveImage(prev => (prev + 1) % discoveredImages.length); }}
+                        className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-90 transition-all z-20"
                         aria-label="Next image"
                       >
                         <ChevronRight className="w-8 h-8 text-gray-900" />
@@ -99,35 +161,33 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
                     </>
                   )}
                 </>
-              ) : null}
-              <selectedProduct.imageIcon
-                className={`w-full h-full p-14 text-gray-300 group-hover:scale-105 transition-transform duration-500 ${validImages.length > 0 ? 'hidden' : ''}`}
-                strokeWidth={1}
-                style={validImages.length > 0 ? { display: 'none' } : {}}
-              />
+              ) : (
+                <selectedProduct.imageIcon
+                  className="w-full h-full p-14 text-gray-300 group-hover:scale-105 transition-transform duration-500"
+                  strokeWidth={1}
+                />
+              )}
             </div>
-            <div className="flex gap-4 mb-4">
-              {validImages.map((imgPath, i) => (
-                <div
-                  key={i}
-                  onClick={() => setActiveImage(i)}
-                  className={`bg-gray-50 rounded-2xl aspect-square w-1/4 border-2 cursor-pointer flex items-center justify-center p-2 transition-all overflow-hidden ${activeImage === i ? 'border-orange-500 ring-2 ring-orange-200' : 'border-gray-200 hover:border-orange-300'}`}
-                >
-                  <img
-                    src={imgPath}
-                    alt={`${selectedProduct.name} view ${i + 1}`}
-                    className="w-full h-full object-contain rounded-xl transition-opacity"
-                    onError={(e) => { e.target.parentElement.style.display = 'none'; }}
-                  />
-                </div>
-              ))}
-              {/* Fill remaining slots with icon placeholders if less than 2 valid images */}
-              {validImages.length < 2 && Array.from({ length: 2 - validImages.length }).map((_, i) => (
-                <div key={`placeholder-${i}`} className="bg-gray-50 rounded-2xl aspect-square w-1/4 border border-gray-200 flex items-center justify-center p-2">
-                  <selectedProduct.imageIcon className="w-full h-full p-4 text-gray-300" strokeWidth={1} />
-                </div>
-              ))}
-            </div>
+
+            {/* Thumbnails */}
+            {discoveredImages.length > 0 && (
+              <div className="flex gap-4 mb-4">
+                {discoveredImages.map((img, i) => (
+                  <div
+                    key={img.suffix}
+                    onClick={() => setActiveImage(i)}
+                    className={`bg-gray-50 rounded-2xl aspect-square w-1/4 border-2 cursor-pointer flex items-center justify-center p-2 transition-all overflow-hidden ${activeImage === i ? 'border-orange-500 ring-2 ring-orange-200' : 'border-gray-200 hover:border-orange-300'}`}
+                  >
+                    <img
+                      src={img.src}
+                      alt={`${selectedProduct.name} view ${i + 1}`}
+                      className="w-full h-full object-contain rounded-xl"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Product Image Disclaimer */}
             <p className="text-xs text-gray-400 leading-relaxed mt-2">
               <span className="font-semibold text-gray-500">Disclaimer:</span> All product images displayed on this website are for reference and illustrative purposes only and remain the intellectual property of their respective manufacturers. Laser Hospital does not claim ownership of any brand trademarks, logos, or product visuals shown. Some images may be digitally enhanced or AI-generated for presentation purposes; the actual product design, colour, dimensions, and packaging may differ from what is depicted. Laser Hospital is an authorized reseller and service provider — no commercial misrepresentation is intended.

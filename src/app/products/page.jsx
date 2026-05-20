@@ -17,6 +17,65 @@ import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedCompone
 
 
 
+
+// Smart image component: tries .jpg → .jpeg → .png for a given product ID
+// Completely bypasses the DB images[] field since anon key cannot update it
+const EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
+
+const ProductImage = ({ id, name, className, FallbackIcon, viewMode, style }) => {
+  const [extIdx, setExtIdx] = React.useState(0);
+  const [failed, setFailed] = React.useState(false);
+
+  const tryNext = () => {
+    if (extIdx + 1 < EXTENSIONS.length) {
+      setExtIdx(i => i + 1);
+    } else {
+      setFailed(true);
+    }
+  };
+
+  if (failed) {
+    return FallbackIcon
+      ? <FallbackIcon className={`${viewMode === 'list' ? 'w-24 h-24' : 'w-32 h-32'} text-gray-300`} strokeWidth={1.5} style={style} />
+      : null;
+  }
+
+  return (
+    <img
+      src={`/${id}(1st).${EXTENSIONS[extIdx]}`}
+      alt={name}
+      className={className}
+      style={style}
+      onError={tryNext}
+    />
+  );
+};
+
+const ProductImageSlide = ({ id, name, suffix, className, style, onFail }) => {
+  const [extIdx, setExtIdx] = React.useState(0);
+  const [failed, setFailed] = React.useState(false);
+
+  const tryNext = () => {
+    if (extIdx + 1 < EXTENSIONS.length) {
+      setExtIdx(i => i + 1);
+    } else {
+      setFailed(true);
+      if (onFail) onFail();
+    }
+  };
+
+  if (failed) return null;
+  return (
+    <img
+      src={`/${id}(${suffix}).${EXTENSIONS[extIdx]}`}
+      alt={`${name} ${suffix}`}
+      className={className}
+      style={style}
+      onError={tryNext}
+    />
+  );
+};
+
 const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setActiveCat, viewMode, setViewMode, selectedBrands, setSelectedBrands }) => {
   const categories = ['ALL PRODUCTS', 'INKJET', 'LASER', 'INK', 'MAINTENANCE', 'PERIPHERALS', 'ACCESSORIES'];
 
@@ -48,11 +107,20 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
           if (p.type === 'PERIPHERALS') IconComponent = Mouse;
           if (p.type === 'ACCESSORIES') IconComponent = Link;
           
+          // Build image URL directly from product ID — DB images field is stale.
+          // Try (1st) with jpg first; onError in the <img> tag will try other extensions.
+          const baseImgUrl = `/${p.id}(1st).jpg`;
           return {
             ...p,
             badgeColor: p.badge_color,
             imageIcon: IconComponent,
-            imageUrl: p.images && p.images.length > 0 ? p.images[0] : `/${p.id}(1st).jpg`
+            imageUrl: baseImgUrl,
+            // Pre-build all candidate paths: jpg, jpeg, png (in order)
+            imagePaths: [
+              `/${p.id}(1st).jpg`,
+              `/${p.id}(1st).jpeg`,
+              `/${p.id}(1st).png`,
+            ]
           };
         });
         setProducts(mappedData);
@@ -322,18 +390,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                       <div className="absolute top-4 right-4 z-10 bg-white px-3 py-1 rounded-lg text-xs font-black text-gray-800 shadow-sm">
                         {product.brand}
                       </div>
-                      {product.imageUrl && (
-                        <img 
-                          src={product.imageUrl} 
-                          alt={product.name} 
-                          className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-all duration-500" 
-                          onError={(e) => { e.target.style.display = 'none'; if(e.target.nextSibling) e.target.nextSibling.style.display = 'block'; }}
-                        />
-                      )}
-                      <product.imageIcon 
-                        className={`${viewMode === 'list' ? 'w-24 h-24' : 'w-32 h-32'} text-gray-300 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-500 ${product.imageUrl ? 'hidden' : ''}`} 
-                        strokeWidth={1.5} 
-                      />
+                      <ProductImage id={product.id} name={product.name} className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-all duration-500" FallbackIcon={product.imageIcon} viewMode={viewMode} />
                     </div>
 
                     {/* Content */}
