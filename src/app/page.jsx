@@ -27,7 +27,6 @@ const HomePage = ({ navigateTo }) => (
         />
         {/* Subtle patterns/shapes */}
         <div className="absolute top-20 right-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-yellow-200/30 rounded-full blur-3xl"></div>
         
         {/* Floating Outline Images */}
         <Printer className="absolute top-24 right-[15%] w-48 h-48 text-white/10 floating-slow" strokeWidth={1} />

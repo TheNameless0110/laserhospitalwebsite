@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Menu, X, Search, ChevronRight, User, ShoppingCart,
@@ -17,7 +17,7 @@ import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedCompone
 
 
 
-const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setActiveCat, viewMode, setViewMode, selectedBrands, setSelectedBrands, maxPrice, setMaxPrice }) => {
+const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setActiveCat, viewMode, setViewMode, selectedBrands, setSelectedBrands }) => {
   const categories = ['ALL PRODUCTS', 'INKJET', 'LASER', 'INK', 'MAINTENANCE', 'PRINT HEAD', 'PERIPHERALS', 'ACCESSORIES'];
 
   const [products, setProducts] = useState([]);
@@ -97,6 +97,12 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
     if (distance < -minSwipeDistance) setCurrentSlide((prev) => (prev === 0 ? featuredProducts.length - 1 : prev - 1));
   };
 
+  // Compute unique brands dynamically
+  const uniqueBrands = useMemo(() => {
+    const brands = new Set(products.map(p => p.brand));
+    return Array.from(brands).sort();
+  }, [products]);
+
   // Toggle Brand Filter
   const toggleBrand = (brand) => {
     setSelectedBrands(prev =>
@@ -109,8 +115,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
     const matchCat = activeCat === 'ALL PRODUCTS' || p.type === activeCat;
     const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || p.brand.toLowerCase().includes(searchQuery.toLowerCase().trim());
     const matchBrand = selectedBrands.length === 0 || selectedBrands.includes(p.brand);
-    const matchPrice = p.price <= maxPrice;
-    return matchCat && matchSearch && matchBrand && matchPrice;
+    return matchCat && matchSearch && matchBrand;
   });
 
   return (
@@ -236,9 +241,9 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
             <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 sticky top-28">
               <div className="hidden lg:flex items-center gap-2 font-bold text-xl text-gray-900 mb-6 pb-4 border-b border-gray-100">
                 <Filter className="w-5 h-5 text-orange-500" /> Filters
-                {(selectedBrands.length > 0 || maxPrice < 30000) && (
+                {selectedBrands.length > 0 && (
                   <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full ml-auto">
-                    {selectedBrands.length + (maxPrice < 30000 ? 1 : 0)} active
+                    {selectedBrands.length} active
                   </span>
                 )}
               </div>
@@ -252,8 +257,8 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                   <span>Brands</span>
                   <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-transform duration-300 ${expandedSections.brands ? 'rotate-180' : ''}`} />
                 </button>
-                <div className={`space-y-3 overflow-hidden transition-all duration-300 ${expandedSections.brands ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                  {['HP', 'Epson', 'Canon', 'Fingers', 'AntEsports', 'Ranz', 'SmartPro', 'Lapcare', 'AARVEX'].map(brand => (
+                <div className={`space-y-3 overflow-hidden transition-all duration-300 ${expandedSections.brands ? 'max-h-96 overflow-y-auto opacity-100 pr-2' : 'max-h-0 opacity-0'}`}>
+                  {uniqueBrands.map(brand => (
                     <label key={brand} className="flex items-center space-x-3 text-gray-700 cursor-pointer hover:text-orange-500 transition-colors group">
                       <input
                         type="checkbox"
@@ -262,41 +267,17 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                         className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500 transition-all cursor-pointer"
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <span className="group-hover:font-medium">{brand}</span>
+                      <span className="group-hover:font-medium flex-1">{brand}</span>
+                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{products.filter(p => p.brand === brand).length}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              {/* Price Filter */}
-              <div className="mb-6 lg:mb-8">
-                <button 
-                  onClick={() => toggleSection('price')}
-                  className="w-full flex items-center justify-between font-bold text-gray-900 mb-4 focus:outline-none group"
-                >
-                  <span>Price Range</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-transform duration-300 ${expandedSections.price ? 'rotate-180' : ''}`} />
-                </button>
-                <div className={`overflow-hidden transition-all duration-300 ${expandedSections.price ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
-                  <p className="text-sm text-gray-500 mb-3">Max: ₹{maxPrice.toLocaleString('en-IN')}</p>
-                  <input
-                    type="range"
-                    min="0" max="30000" step="1000"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(Number(e.target.value))}
-                    className="w-full accent-orange-500 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  />
-                  <div className="flex justify-between text-sm font-medium text-gray-500 mt-3">
-                    <span>₹0</span>
-                    <span>₹30,000+</span>
-                  </div>
-                </div>
-              </div>
-
               {/* Clear Filters Button */}
-              {(selectedBrands.length > 0 || maxPrice < 30000) && (
+              {selectedBrands.length > 0 && (
                 <button
-                  onClick={() => { setSelectedBrands([]); setMaxPrice(30000); }}
+                  onClick={() => setSelectedBrands([])}
                   className="w-full mt-4 py-2 text-sm font-bold text-gray-500 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors border border-dashed border-gray-200 hover:border-orange-200"
                 >
                   Clear All Filters
@@ -402,7 +383,6 @@ function ProductsPageContent() {
       const [activeCat, setActiveCat] = useState('ALL PRODUCTS');
       const [viewMode, setViewMode] = useState('grid');
       const [selectedBrands, setSelectedBrands] = useState([]);
-      const [maxPrice, setMaxPrice] = useState(30000);
 
   // Update local state if URL changes
   useEffect(() => {
@@ -425,7 +405,6 @@ function ProductsPageContent() {
         activeCat={activeCat} setActiveCat={setActiveCat}
         viewMode={viewMode} setViewMode={setViewMode}
         selectedBrands={selectedBrands} setSelectedBrands={setSelectedBrands}
-        maxPrice={maxPrice} setMaxPrice={setMaxPrice}
       />;
 }
 
