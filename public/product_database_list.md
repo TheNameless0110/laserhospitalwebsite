@@ -1,4 +1,4 @@
-﻿# Laser Hospital Product Database List
+# Laser Hospital Product Database List
 
 This document lists all products currently defined in `src/lib/dummyData.js`. 
 
@@ -101,12 +101,12 @@ This document lists all products currently defined in `src/lib/dummyData.js`.
 | 93 | `fingers_fingers_btfreedom_mini_bluetooth_keyboard` | FINGERS BT-Freedom Mini Bluetooth Keyboard | PERIPHERALS |
 | 94 | `fingers_fingers_chessycombo_wired_keyboard_mouse_set` | FINGERS ChessyCombo Wired Keyboard & Mouse Set | PERIPHERALS |
 | 95 | `antesports_antesports_km540_gaming_keyboard_mouse_combo` | AntEsports KM540 Gaming Keyboard & Mouse Combo | PERIPHERALS |
-| 96 | `ranz_1.5m_usb_printer_cable` | RANZ 1.5m USB Printer Cable | ACCESSORIES |
+| 96 | `ranz_15m_usb_printer_cable` | RANZ 1.5m USB Printer Cable | ACCESSORIES |
 | 97 | `ranz_3m_usb_printer_cable` | RANZ 3m USB Printer Cable | ACCESSORIES |
 | 98 | `ranz_5m_usb_printer_cable` | RANZ 5m USB Printer Cable | ACCESSORIES |
-| 99 | `ranz_2_pin_power_cord_1.5m` | RANZ 2 PIN Power Cord (1.5m) | ACCESSORIES |
+| 99 | `ranz_2_pin_power_cord_15m` | RANZ 2 PIN Power Cord (1.5m) | ACCESSORIES |
 | 100 | `ranz_cat_6_patch_cord_3m` | RANZ CAT 6 Patch Cord (3m) | ACCESSORIES |
-| 101 | `ranz_cat_6_patch_cord_1.5m` | RANZ CAT 6 Patch Cord (1.5m) | ACCESSORIES |
+| 101 | `ranz_cat_6_patch_cord_15m` | RANZ CAT 6 Patch Cord (1.5m) | ACCESSORIES |
 | 102 | `ranz_cat_6_patch_cord_1m` | RANZ CAT 6 Patch Cord (1m) | ACCESSORIES |
 | 103 | `ranz_screen_cleaning_expert_rzck31` | RANZ Screen Cleaning Expert RZ-CK31 | ACCESSORIES |
 | 104 | `ranz_hdmi_to_hdmi_cable_4k2k_60hz_cabrio` | RANZ HDMI to HDMI Cable 4K2K 60Hz CABRIO | ACCESSORIES |
