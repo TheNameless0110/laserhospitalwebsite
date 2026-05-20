@@ -18,7 +18,7 @@ import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedCompone
 
 
 const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setActiveCat, viewMode, setViewMode, selectedBrands, setSelectedBrands }) => {
-  const categories = ['ALL PRODUCTS', 'INKJET', 'LASER', 'INK', 'MAINTENANCE', 'PRINT HEAD', 'PERIPHERALS', 'ACCESSORIES'];
+  const categories = ['ALL PRODUCTS', 'INKJET', 'LASER', 'INK', 'MAINTENANCE', 'PERIPHERALS', 'ACCESSORIES'];
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -297,7 +297,7 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">No products found</h3>
                 <p className="text-gray-500 mb-6 text-lg">We couldn&apos;t find anything matching your current filters and search query.</p>
                 <button
-                  onClick={() => { setSearchQuery(''); setSelectedBrands([]); setMaxPrice(30000); setActiveCat('ALL PRODUCTS'); }}
+                  onClick={() => { setSearchQuery(''); setSelectedBrands([]); setActiveCat('ALL PRODUCTS'); }}
                   className="bg-orange-50 text-orange-600 px-8 py-3 rounded-full font-bold hover:bg-orange-100 transition-colors"
                 >
                   Clear All Filters
