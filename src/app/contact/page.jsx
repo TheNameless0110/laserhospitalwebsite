@@ -51,18 +51,28 @@ const ContactPage = ({ setToast }) => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const response = await fetch('https://formspree.io/f/xrevpgor', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            subject: formData.type,
-            message: formData.message,
-            phone: formData.phone || ''
-          })
+        const payload = JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.type,
+          message: formData.message,
+          phone: formData.phone || ''
         });
-        if (!response.ok) throw new Error('Formspree submission failed');
+        
+        const [res1, res2] = await Promise.all([
+          fetch('https://formspree.io/f/xrevpgor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload
+          }),
+          fetch('https://formspree.io/f/xjgdyvad', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload
+          })
+        ]);
+
+        if (!res1.ok || !res2.ok) throw new Error('Formspree submission failed');
         setFormData({ name: '', email: '', phone: '', type: 'General Inquiry', message: '' });
         setToast('Inquiry submitted successfully! We will contact you shortly.', 'success');
       } catch (err) {
