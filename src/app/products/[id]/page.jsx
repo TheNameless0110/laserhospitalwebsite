@@ -11,8 +11,7 @@ import {
   Instagram, Facebook, AlertCircle, Loader2, PenTool,
   Mouse, Keyboard, HardDrive, Link, Wifi
 } from 'lucide-react';
-import { servicesList, productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
-import { supabase } from '@/lib/supabaseClient';
+import { dummyProducts, servicesList, productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 
 
@@ -79,8 +78,8 @@ const ProductDetailPage = ({ productId, navigateTo }) => {
   useEffect(() => {
     if (!productId) return;
     const fetchProduct = async () => {
-      const { data, error } = await supabase.from('products').select('*').eq('id', productId).single();
-      if (!error && data) {
+      const data = dummyProducts.find(p => p.id === productId);
+      if (data) {
         let IconComp = Printer;
         if (data.type === 'INK') IconComp = Droplet;
         if (data.type === 'MAINTENANCE') IconComp = Wrench;

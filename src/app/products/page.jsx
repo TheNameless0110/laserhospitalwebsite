@@ -11,8 +11,7 @@ import {
   Instagram, Facebook, AlertCircle, Loader2, PenTool,
   Mouse, Keyboard, HardDrive, Link, Wifi
 } from 'lucide-react';
-import { servicesList, productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
-import { supabase } from '@/lib/supabaseClient';
+import { dummyProducts, servicesList, productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 
 
@@ -96,8 +95,8 @@ const ProductsPage = ({ navigateTo, searchQuery, setSearchQuery, activeCat, setA
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('products').select('*');
-      if (!error && data) {
+      const data = dummyProducts;
+      if (data) {
         // Map database fields back to component props and assign icons
         const mappedData = data.map(p => {
           let IconComponent = Printer;

@@ -12,7 +12,6 @@ import {
   Mouse, Keyboard, HardDrive, Link, Wifi
 } from 'lucide-react';
 import { productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
-import { supabase } from '@/lib/supabaseClient';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 import Toast from '@/components/ui/Toast';
 
@@ -52,15 +51,19 @@ const ContactPage = ({ setToast }) => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const { error } = await supabase.from('inquiries').insert([{
-          name: formData.name,
-          email: formData.email,
-          subject: formData.type,
-          message: formData.message,
-          phone: formData.phone || ''
-        }]);
-        if (error) throw error;
-        setFormData({ name: '', email: '', type: 'General Inquiry', message: '' });
+        const response = await fetch('https://formspree.io/f/xrevpgor', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: formData.type,
+            message: formData.message,
+            phone: formData.phone || ''
+          })
+        });
+        if (!response.ok) throw new Error('Formspree submission failed');
+        setFormData({ name: '', email: '', phone: '', type: 'General Inquiry', message: '' });
         setToast('Inquiry submitted successfully! We will contact you shortly.', 'success');
       } catch (err) {
         console.error('Error submitting inquiry:', err);

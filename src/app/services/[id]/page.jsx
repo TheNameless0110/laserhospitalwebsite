@@ -12,7 +12,6 @@ import {
   Mouse, Keyboard, HardDrive, Link, Wifi
 } from 'lucide-react';
 import { productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
-import { supabase } from '@/lib/supabaseClient';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 
 
@@ -22,18 +21,10 @@ const ServiceDetailPage = ({ serviceId, navigateTo }) => {
 
   useEffect(() => {
     if (!serviceId) return;
-    const fetchService = async () => {
-      const { data, error } = await supabase.from('services').select('*').eq('id', serviceId).single();
-      if (!error && data) {
-        let IconComp = Wrench;
-        if (data.id.includes('repair')) IconComp = Printer;
-        if (data.id.includes('ink')) IconComp = Droplet;
-        if (data.id.includes('maintenance')) IconComp = Settings;
-        // The column in DB for overview is detailed_overview
-        setSelectedService({ ...data, detailedOverview: data.detailed_overview, icon: IconComp });
-      }
-    };
-    fetchService();
+    const data = servicesList.find(s => s.id === serviceId);
+    if (data) {
+      setSelectedService(data);
+    }
   }, [serviceId]);
   if (!selectedService) return <div className="pt-32 pb-32 text-center text-xl font-bold bg-white min-h-screen">Loading service details...</div>;
   return (

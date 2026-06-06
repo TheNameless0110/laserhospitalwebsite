@@ -11,8 +11,7 @@ import {
   Instagram, Facebook, AlertCircle, Loader2, PenTool,
   Mouse, Keyboard, HardDrive, Link, Wifi
 } from 'lucide-react';
-import { productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
-import { supabase } from '@/lib/supabaseClient';
+import { servicesList, productImages, serviceImages, aboutImages, contactImages, homeImages } from '@/lib/dummyData';
 import { HeroBackgroundSlider, CountUp } from '@/components/layout/SharedComponents';
 
 
@@ -24,8 +23,8 @@ const ServicesPage = ({ navigateTo }) => {
   useEffect(() => {
     const fetchServices = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('services').select('*');
-      if (!error && data) {
+      const data = servicesList;
+      if (data) {
         const mappedData = data.map(s => {
           let IconComp = Wrench;
           if (s.id.includes('repair')) IconComp = Printer;

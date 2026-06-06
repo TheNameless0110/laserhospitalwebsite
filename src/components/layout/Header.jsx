@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Search } from 'lucide-react';
-import { supabase } from '@/lib/supabaseClient';
+import { dummyProducts } from '@/lib/dummyData';
 
 export default function Header() {
   const pathname = usePathname();
@@ -43,15 +43,16 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Live search suggestions from Supabase
-  const fetchSuggestions = async (query) => {
+  // Live search suggestions from local data
+  const fetchSuggestions = (query) => {
     if (!query.trim()) { setSuggestions([]); return; }
-    const { data } = await supabase
-      .from('products')
-      .select('id, name, brand, type')
-      .or(`name.ilike.%${query}%,brand.ilike.%${query}%,type.ilike.%${query}%`)
-      .limit(8);
-    setSuggestions(data || []);
+    const q = query.toLowerCase();
+    const data = dummyProducts.filter(p => 
+      p.name.toLowerCase().includes(q) || 
+      p.brand.toLowerCase().includes(q) || 
+      p.type.toLowerCase().includes(q)
+    ).slice(0, 8);
+    setSuggestions(data);
     setShowSuggestions(true);
   };
 
