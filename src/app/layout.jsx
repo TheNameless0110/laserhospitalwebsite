@@ -1,5 +1,9 @@
+import { Inter, Outfit } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CookieConsent from '@/components/ui/CookieConsent';
@@ -55,8 +59,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="antialiased min-h-screen flex flex-col">
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${outfit.variable}`}>
+      <body className="font-sans antialiased min-h-screen flex flex-col bg-gray-50 text-gray-900">
         <CookieConsent />
 
         <Header />

@@ -20,13 +20,14 @@ const HomePage = ({ navigateTo }) => (
   <div className="animate-in fade-in duration-500">
     {/* Hero Section */}
     <section className="relative pt-32 pb-40 lg:pt-48 lg:pb-56 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full -z-10 bg-amber-500">
+      <div className="absolute top-0 left-0 w-full h-full -z-10 bg-slate-950">
         <HeroBackgroundSlider 
           images={homeImages} 
-          overlayClass="bg-gradient-to-r from-gray-900/80 via-gray-900/40 to-transparent" 
+          overlayClass="bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/40" 
         />
-        {/* Subtle patterns/shapes */}
-        <div className="absolute top-20 right-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
+        {/* Premium Glassmorphism Glowing Orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] bg-orange-600/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-600/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none"></div>
         
         {/* Floating Outline Images */}
         <Printer className="absolute top-24 right-[15%] w-48 h-48 text-white/10 floating-slow" strokeWidth={1} />
@@ -41,25 +42,25 @@ const HomePage = ({ navigateTo }) => (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center justify-center">
           <div className="w-full max-w-4xl text-white text-center mb-16 lg:mb-0 px-2 sm:px-0">
-            <p className="text-orange-400 font-bold tracking-widest uppercase mb-4 text-sm sm:text-base drop-shadow-sm fade-in-up">
+            <p className="text-orange-500 font-bold tracking-[0.2em] uppercase mb-4 text-sm sm:text-base drop-shadow-sm fade-in-up">
               Welcome to Laser Hospital
             </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-8 drop-shadow-lg leading-tight fade-in-up">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight mb-8 drop-shadow-2xl leading-[1.1] fade-in-up text-white">
               Expert Printer Repairs & Premium Supplies
             </h1>
-            <p className="text-xl sm:text-2xl text-orange-50 mb-12 max-w-3xl mx-auto font-light leading-relaxed fade-in-up" style={{ animationDelay: '150ms' }}>
+            <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto font-light leading-relaxed fade-in-up" style={{ animationDelay: '150ms' }}>
               We provide enterprise-grade printing solutions, genuine parts, and expert diagnostics to maximize your business efficiency.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 fade-in-up w-full px-4 sm:px-0" style={{ animationDelay: '300ms' }}>
               <button 
                 onClick={() => navigateTo('PRODUCTS')}
-                className="w-full sm:w-auto bg-orange-600 text-white px-10 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 hover:bg-orange-700 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                className="w-full sm:w-auto min-h-[56px] bg-[#E65100] text-white px-10 py-4 rounded-full font-bold text-lg shadow-[0_0_40px_rgba(230,81,0,0.4)] hover:shadow-[0_0_60px_rgba(230,81,0,0.6)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-400/50"
               >
                 Explore Products
               </button>
               <button 
                 onClick={() => navigateTo('SERVICES')}
-                className="w-full sm:w-auto bg-white/10 text-white backdrop-blur-sm border border-white/20 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/50"
+                className="w-full sm:w-auto min-h-[56px] bg-white/5 text-white backdrop-blur-md border border-white/10 px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
               >
                 View Services
               </button>
@@ -77,8 +78,8 @@ const HomePage = ({ navigateTo }) => (
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 fade-in-up">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Enterprise Print Solutions</h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-400 mx-auto rounded-full"></div>
+          <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-4">Enterprise Print Solutions</h2>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#E65100] via-orange-400 to-yellow-400 mx-auto rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -91,7 +92,7 @@ const HomePage = ({ navigateTo }) => (
               <div className="w-20 h-20 rounded-2xl bg-orange-50 flex items-center justify-center mb-8 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300">
                 <feature.icon className="w-10 h-10 text-orange-500" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+              <h3 className="font-display text-2xl font-bold tracking-tight text-gray-900 mb-4">{feature.title}</h3>
               <p className="text-gray-600 text-lg leading-relaxed">{feature.desc}</p>
             </div>
           ))}
@@ -135,7 +136,7 @@ const HomePage = ({ navigateTo }) => (
 
           {/* Text Side */}
           <div className="lg:w-1/2 lg:pl-10">
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-8 leading-tight fade-in-up">In-Store Expert Diagnostics</h2>
+            <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-8 leading-tight fade-in-up">In-Store Expert Diagnostics</h2>
             <p className="text-gray-600 text-xl mb-10 leading-loose font-light fade-in-up" style={{ animationDelay: '150ms' }}>
               Laser Hospital allows businesses to manage their printing infrastructure seamlessly. Bring your devices to our specialized service center for immediate, hands-on diagnostics and rapid turnaround times.
             </p>
@@ -190,7 +191,7 @@ const HomePage = ({ navigateTo }) => (
             { label: 'Corporate Clients', value: 500, suffix: '+' }
           ].map((stat, i) => (
             <div key={i} className="pt-8 md:pt-0 fade-in-up" style={{ animationDelay: `${i * 150}ms` }}>
-              <div className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter">
+              <div className="font-display text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter">
                 <CountUp end={stat.value} suffix={stat.suffix} />
               </div>
               <div className="text-orange-400 font-bold uppercase tracking-widest text-sm">{stat.label}</div>
@@ -208,8 +209,8 @@ const HomePage = ({ navigateTo }) => (
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-20 fade-in-up">
-          <h2 className="text-4xl font-black text-gray-900 mb-6">What Our Clients Say</h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-400 to-pink-500 mx-auto rounded-full"></div>
+          <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-6">What Our Clients Say</h2>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#E65100] to-yellow-400 mx-auto rounded-full"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -245,7 +246,7 @@ const HomePage = ({ navigateTo }) => (
     <section className="py-24 bg-gradient-to-r from-orange-500 to-amber-500 text-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       <div className="max-w-4xl mx-auto relative z-10 fade-in-up">
-        <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight tracking-tight">Ready to optimize your tech infrastructure?</h2>
+        <h2 className="font-display text-5xl md:text-6xl font-black text-white mb-8 leading-tight tracking-tight drop-shadow-lg">Ready to optimize your tech infrastructure?</h2>
         <p className="text-2xl text-orange-50 mb-12 font-medium">Contact our team today for an easy workflow assessment.</p>
         <button 
           onClick={() => navigateTo('CONTACT')}

@@ -125,8 +125,16 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Search + Mobile Menu */}
+          {/* Desktop CTA + Search + Mobile Menu */}
           <div className="flex items-center justify-end shrink-0 space-x-3" ref={desktopSearchRef}>
+            {/* Desktop CTA */}
+            <Link 
+              href="/contact"
+              className="hidden md:inline-flex items-center justify-center bg-[#E65100] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#CC4800] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 duration-300"
+            >
+              Request Service
+            </Link>
+            
             {/* Desktop Search Bar (always visible on lg+) */}
             <div className="hidden lg:flex items-center relative">
               <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 focus-within:ring-2 focus-within:ring-orange-500 focus-within:bg-white transition-all shadow-inner">
@@ -164,7 +172,7 @@ export default function Header() {
             {/* Tablet/Mobile Search Icon (visible below lg) */}
             <button
               ref={searchIconRef}
-              className="lg:hidden p-2 text-gray-600 hover:text-orange-500 transition-colors rounded-full hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              className="lg:hidden min-h-[48px] min-w-[48px] flex items-center justify-center text-gray-600 hover:text-orange-500 transition-colors rounded-full hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
             >
@@ -173,10 +181,11 @@ export default function Header() {
             
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden p-2 text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md"
+              className="md:hidden min-h-[48px] min-w-[48px] flex items-center justify-center text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md hover:bg-orange-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X /> : <Menu />}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
