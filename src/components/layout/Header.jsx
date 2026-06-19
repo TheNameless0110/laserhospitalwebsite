@@ -88,7 +88,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-20 w-full gap-4">
           
           {/* Logo + Company Name */}
-          <Link href="/" className="flex items-center cursor-pointer group shrink-0">
+          <Link href="/" className="flex items-center cursor-pointer group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-lg p-1 -ml-1">
             <Image
               src="/N-LH-Logo.jpg"
               alt="Laser Hospital Logo"
@@ -115,7 +115,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`text-sm font-semibold tracking-wide transition-colors whitespace-nowrap ${
+                  className={`text-sm font-semibold tracking-wide transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md px-2 py-1 ${
                     isActive ? 'text-orange-500' : 'text-gray-600 hover:text-orange-500'
                   }`}
                 >
@@ -148,7 +148,7 @@ export default function Header() {
                     <button
                       key={s.id}
                       onClick={() => selectSuggestion(s)}
-                      className="w-full text-left px-5 py-3 hover:bg-orange-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0"
+                      className="w-full text-left px-5 py-3 hover:bg-orange-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0 focus-visible:outline-none focus-visible:bg-orange-50"
                     >
                       <div>
                         <p className="font-semibold text-gray-900 text-sm">{s.name}</p>
@@ -164,7 +164,7 @@ export default function Header() {
             {/* Tablet/Mobile Search Icon (visible below lg) */}
             <button
               ref={searchIconRef}
-              className="lg:hidden p-2 text-gray-600 hover:text-orange-500 transition-colors rounded-full hover:bg-orange-50"
+              className="lg:hidden p-2 text-gray-600 hover:text-orange-500 transition-colors rounded-full hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
             >
@@ -173,7 +173,7 @@ export default function Header() {
             
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden p-2 text-gray-600"
+              className="md:hidden p-2 text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X /> : <Menu />}
@@ -207,7 +207,7 @@ export default function Header() {
                   <button
                     key={s.id}
                     onClick={() => selectSuggestion(s)}
-                    className="w-full text-left px-5 py-3 hover:bg-orange-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0"
+                    className="w-full text-left px-5 py-3 hover:bg-orange-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0 focus-visible:outline-none focus-visible:bg-orange-50"
                   >
                     <div>
                       <p className="font-semibold text-gray-900 text-sm">{s.name}</p>
@@ -231,7 +231,7 @@ export default function Header() {
                 key={item.name}
                 href={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full text-left px-4 py-4 rounded-md text-lg font-bold text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0"
+                className="block w-full text-left px-4 py-4 rounded-md text-lg font-bold text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 focus-visible:outline-none focus-visible:bg-orange-50 focus-visible:text-orange-500"
               >
                 {item.name}
               </Link>

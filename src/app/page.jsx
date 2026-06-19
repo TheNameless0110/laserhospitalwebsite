@@ -40,19 +40,28 @@ const HomePage = ({ navigateTo }) => (
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center justify-center">
-          <div className="w-full max-w-4xl text-white text-center mb-16 lg:mb-0">
-            <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter mb-6 drop-shadow-lg leading-tight fade-in-up">
-              WELCOME TO <br className="hidden lg:block"/> LASER HOSPITAL
-            </h1>
-            <p className="text-xl sm:text-2xl text-orange-50 mb-10 max-w-3xl mx-auto font-light leading-relaxed fade-in-up" style={{ animationDelay: '150ms' }}>
-              Premium printing service solutions, and expert repairs for your business efficiency.
+          <div className="w-full max-w-4xl text-white text-center mb-16 lg:mb-0 px-2 sm:px-0">
+            <p className="text-orange-400 font-bold tracking-widest uppercase mb-4 text-sm sm:text-base drop-shadow-sm fade-in-up">
+              Welcome to Laser Hospital
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 fade-in-up" style={{ animationDelay: '300ms' }}>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-8 drop-shadow-lg leading-tight fade-in-up">
+              Expert Printer Repairs & Premium Supplies
+            </h1>
+            <p className="text-xl sm:text-2xl text-orange-50 mb-12 max-w-3xl mx-auto font-light leading-relaxed fade-in-up" style={{ animationDelay: '150ms' }}>
+              We provide enterprise-grade printing solutions, genuine parts, and expert diagnostics to maximize your business efficiency.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 fade-in-up w-full px-4 sm:px-0" style={{ animationDelay: '300ms' }}>
               <button 
                 onClick={() => navigateTo('PRODUCTS')}
-                className="bg-white text-orange-600 px-10 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 hover:bg-orange-50 transition-all duration-300"
+                className="w-full sm:w-auto bg-orange-600 text-white px-10 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 hover:bg-orange-700 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               >
                 Explore Products
+              </button>
+              <button 
+                onClick={() => navigateTo('SERVICES')}
+                className="w-full sm:w-auto bg-white/10 text-white backdrop-blur-sm border border-white/20 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/50"
+              >
+                View Services
               </button>
             </div>
           </div>
@@ -142,7 +151,7 @@ const HomePage = ({ navigateTo }) => (
             </ul>
             <button 
               onClick={() => navigateTo('ABOUT')}
-              className="bg-transparent border-2 border-orange-500 text-orange-600 px-10 py-4 rounded-full font-bold hover:bg-orange-50 hover:scale-105 active:scale-95 transition-all duration-300 fade-in-up" style={{ animationDelay: '600ms' }}
+              className="bg-transparent border-2 border-orange-500 text-orange-600 px-10 py-4 rounded-full font-bold hover:bg-orange-50 hover:scale-105 active:scale-95 transition-all duration-300 fade-in-up focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/50" style={{ animationDelay: '600ms' }}
             >
               Learn About Us
             </button>
@@ -240,7 +249,7 @@ const HomePage = ({ navigateTo }) => (
         <p className="text-2xl text-orange-50 mb-12 font-medium">Contact our team today for an easy workflow assessment.</p>
         <button 
           onClick={() => navigateTo('CONTACT')}
-          className="bg-gray-900 text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl inline-flex items-center"
+          className="bg-gray-900 text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl inline-flex items-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gray-400/50"
         >
           Contact Us <ArrowRight className="ml-3 w-6 h-6" />
         </button>
