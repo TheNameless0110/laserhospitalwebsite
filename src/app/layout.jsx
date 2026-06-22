@@ -11,15 +11,16 @@ import CookieConsent from '@/components/ui/CookieConsent';
 export const metadata = {
   metadataBase: new URL('https://www.laserhospital.co.in'),
   title: {
-    default: 'Laser Hospital – Printer Sales, Service & Accessories | Guwahati',
+    default: 'Laser Hospital – Printer Sales, Service & Accessories | Bhubaneswar, Odisha',
     template: '%s | Laser Hospital',
   },
-  description: 'Laser Hospital is Guwahati\'s trusted destination for printer sales, expert repair services, genuine ink & toner, and computer peripherals. Canon, Epson, HP printers & more.',
+  description: 'Laser Hospital is Bhubaneswar\'s trusted destination for printer sales, expert repair services, genuine ink & toner, and computer peripherals in Odisha. Canon, Epson, HP printers & more.',
   keywords: [
-    'Laser Hospital', 'printer repair Guwahati', 'printer service', 'ink bottle',
+    'Laser Hospital', 'printer repair Bhubaneswar', 'printer service Odisha', 'ink bottle',
     'Canon printer', 'Epson printer', 'HP printer', 'toner refill',
-    'printer accessories', 'cartridge service', 'laptop repair Guwahati',
+    'printer accessories', 'cartridge service', 'laptop repair Bhubaneswar',
     'computer peripherals', 'FINGERS keyboard', 'RANZ cables',
+    'printer repair Odisha', 'Saheed Nagar printer shop', 'Bhubaneswar printer service',
   ],
   authors: [{ name: 'Laser Hospital' }],
   creator: 'Laser Hospital',
@@ -41,12 +42,12 @@ export const metadata = {
     url: 'https://www.laserhospital.co.in',
     siteName: 'Laser Hospital',
     title: 'Laser Hospital – Printer Sales, Service & Accessories',
-    description: 'Guwahati\'s trusted destination for printer sales, expert repair, genuine ink & toner, and computer peripherals.',
+    description: 'Bhubaneswar\'s trusted destination for printer sales, expert repair, genuine ink & toner, and computer peripherals in Odisha.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Laser Hospital – Printer Sales, Service & Accessories',
-    description: 'Guwahati\'s trusted destination for printer sales, expert repair, genuine ink & toner, and computer peripherals.',
+    description: 'Bhubaneswar\'s trusted destination for printer sales, expert repair, genuine ink & toner, and computer peripherals in Odisha.',
   },
   alternates: {
     canonical: 'https://www.laserhospital.co.in',
